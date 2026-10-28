@@ -112,7 +112,6 @@ Distance    Time
 2. Runner 1 - 02:00:00
 3. Runner 3 - 02:15:00
 Winner: Runner 2
-```
 
 Test 4: Full Marathon
 
