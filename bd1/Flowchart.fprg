@@ -1,0 +1,313 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<flowgorithm fileversion="2.18">
+  <attributes>
+    <attribute name="name" value="Marathon Pace Calculator - C equivalent"/>
+    <attribute name="authors" value=""/>
+    <attribute name="about" value="C algorithm translated to Flowgorithm"/>
+    <attribute name="saved" value="2026-10-28"/>
+  </attributes>
+  <function name="Main" type="None" variable="">
+    <parameters/>
+    <body>
+      <declare name="runType,runner,hours,minutes,seconds,totalSeconds,time1,time2,time3,rank1,rank2,rank3,temp,tempRank,km,split,paceMin,paceSec,fmtH,fmtM,fmtS,speed100,speedWhole,speedFrac" type="Integer" array="False" size=""/>
+      <declare name="distance,speed,pace" type="Real" array="False" size=""/>
+      <declare name="strH,strM,strS,formattedTime,speedString,paceSecString" type="String" array="False" size=""/>
+      <assign variable="time1" expression="0"/>
+      <assign variable="time2" expression="0"/>
+      <assign variable="time3" expression="0"/>
+      <assign variable="rank1" expression="1"/>
+      <assign variable="rank2" expression="2"/>
+      <assign variable="rank3" expression="3"/>
+      <assign variable="runType" expression="0"/>
+      <output expression="&quot;MARATHON PACE CALCULATOR&quot;" newline="True"/>
+      <output expression="&quot;1. 5 km Run&quot;" newline="True"/>
+      <output expression="&quot;2. 10 km Run&quot;" newline="True"/>
+      <output expression="&quot;3. Half Marathon (21.0975 km)&quot;" newline="True"/>
+      <output expression="&quot;4. Full Marathon (42.195 km)&quot;" newline="True"/>
+      <while expression="runType &lt; 1 or runType &gt; 4">
+        <output expression="&quot;Select running type (1-4):&quot;" newline="True"/>
+        <input variable="runType"/>
+        <if expression="runType &lt; 1 or runType &gt; 4">
+          <then>
+            <output expression="&quot;Invalid choice!&quot;" newline="True"/>
+          </then>
+          <else/>
+        </if>
+      </while>
+      <if expression="runType = 1">
+        <then>
+          <assign variable="distance" expression="5"/>
+        </then>
+        <else>
+          <if expression="runType = 2">
+            <then>
+              <assign variable="distance" expression="10"/>
+            </then>
+            <else>
+              <if expression="runType = 3">
+                <then>
+                  <assign variable="distance" expression="21.0975"/>
+                </then>
+                <else>
+                  <assign variable="distance" expression="42.195"/>
+                </else>
+              </if>
+            </else>
+          </if>
+        </else>
+      </if>
+      <output expression="&quot;Distance: &quot; &amp; ToString(distance) &amp; &quot; km&quot;" newline="True"/>
+      <for variable="runner" start="1" end="3" direction="inc" step="1">
+        <output expression="&quot;Runner &quot; &amp; ToString(runner)" newline="True"/>
+        <assign variable="hours" expression="-1"/>
+        <assign variable="minutes" expression="0"/>
+        <assign variable="seconds" expression="0"/>
+        <assign variable="totalSeconds" expression="0"/>
+        <while expression="hours &lt; 0 or hours &gt; 23 or minutes &lt; 0 or minutes &gt; 59 or seconds &lt; 0 or seconds &gt; 59 or totalSeconds &lt;= 0">
+          <output expression="&quot;Hours:&quot;" newline="True"/>
+          <input variable="hours"/>
+          <output expression="&quot;Minutes:&quot;" newline="True"/>
+          <input variable="minutes"/>
+          <output expression="&quot;Seconds:&quot;" newline="True"/>
+          <input variable="seconds"/>
+          <assign variable="totalSeconds" expression="hours * 3600 + minutes * 60 + seconds"/>
+          <if expression="hours &lt; 0 or hours &gt; 23 or minutes &lt; 0 or minutes &gt; 59 or seconds &lt; 0 or seconds &gt; 59 or totalSeconds &lt;= 0">
+            <then>
+              <output expression="&quot;Invalid time. Try again!&quot;" newline="True"/>
+            </then>
+            <else/>
+          </if>
+        </while>
+        <if expression="runner = 1">
+          <then>
+            <assign variable="time1" expression="totalSeconds"/>
+          </then>
+          <else>
+            <if expression="runner = 2">
+              <then>
+                <assign variable="time2" expression="totalSeconds"/>
+              </then>
+              <else>
+                <assign variable="time3" expression="totalSeconds"/>
+              </else>
+            </if>
+          </else>
+        </if>
+        <assign variable="speed" expression="distance * 3600 / totalSeconds"/>
+        <assign variable="pace" expression="totalSeconds / distance"/>
+        <assign variable="paceMin" expression="Int(pace / 60)"/>
+        <assign variable="paceSec" expression="Int(pace + 0.5) % 60"/>
+        <assign variable="speed100" expression="Int(speed * 100 + 0.5)"/>
+        <assign variable="speedWhole" expression="Int(speed100 / 100)"/>
+        <assign variable="speedFrac" expression="speed100 % 100"/>
+        <if expression="speedFrac &lt; 10">
+          <then>
+            <assign variable="speedString" expression="ToString(speedWhole) &amp; &quot;.0&quot; &amp; ToString(speedFrac)"/>
+          </then>
+          <else>
+            <assign variable="speedString" expression="ToString(speedWhole) &amp; &quot;.&quot; &amp; ToString(speedFrac)"/>
+          </else>
+        </if>
+        <if expression="paceSec &lt; 10">
+          <then>
+            <assign variable="paceSecString" expression="&quot;0&quot; &amp; ToString(paceSec)"/>
+          </then>
+          <else>
+            <assign variable="paceSecString" expression="ToString(paceSec)"/>
+          </else>
+        </if>
+        <output expression="&quot;Average speed: &quot; &amp; speedString &amp; &quot; km/h&quot;" newline="True"/>
+        <output expression="&quot;Average pace: &quot; &amp; ToString(paceMin) &amp; &quot;:&quot; &amp; paceSecString &amp; &quot; min/km&quot;" newline="True"/>
+        <output expression="&quot;Distance    Time&quot;" newline="True"/>
+        <for variable="km" start="5" end="Int(distance)" direction="inc" step="5">
+          <assign variable="split" expression="Int(totalSeconds * km / distance + 0.5)"/>
+          <assign variable="fmtH" expression="Int(split / 3600)"/>
+          <assign variable="fmtM" expression="Int((split % 3600) / 60)"/>
+          <assign variable="fmtS" expression="split % 60"/>
+          <if expression="fmtH &lt; 10">
+            <then>
+              <assign variable="strH" expression="&quot;0&quot; &amp; ToString(fmtH)"/>
+            </then>
+            <else>
+              <assign variable="strH" expression="ToString(fmtH)"/>
+            </else>
+          </if>
+          <if expression="fmtM &lt; 10">
+            <then>
+              <assign variable="strM" expression="&quot;0&quot; &amp; ToString(fmtM)"/>
+            </then>
+            <else>
+              <assign variable="strM" expression="ToString(fmtM)"/>
+            </else>
+          </if>
+          <if expression="fmtS &lt; 10">
+            <then>
+              <assign variable="strS" expression="&quot;0&quot; &amp; ToString(fmtS)"/>
+            </then>
+            <else>
+              <assign variable="strS" expression="ToString(fmtS)"/>
+            </else>
+          </if>
+          <assign variable="formattedTime" expression="strH &amp; &quot;:&quot; &amp; strM &amp; &quot;:&quot; &amp; strS"/>
+          <output expression="ToString(km) &amp; &quot; km        &quot; &amp; formattedTime" newline="True"/>
+        </for>
+        <if expression="runType = 3 or runType = 4">
+          <then>
+            <assign variable="fmtH" expression="Int(totalSeconds / 3600)"/>
+            <assign variable="fmtM" expression="Int((totalSeconds % 3600) / 60)"/>
+            <assign variable="fmtS" expression="totalSeconds % 60"/>
+            <if expression="fmtH &lt; 10">
+              <then>
+                <assign variable="strH" expression="&quot;0&quot; &amp; ToString(fmtH)"/>
+              </then>
+              <else>
+                <assign variable="strH" expression="ToString(fmtH)"/>
+              </else>
+            </if>
+            <if expression="fmtM &lt; 10">
+              <then>
+                <assign variable="strM" expression="&quot;0&quot; &amp; ToString(fmtM)"/>
+              </then>
+              <else>
+                <assign variable="strM" expression="ToString(fmtM)"/>
+              </else>
+            </if>
+            <if expression="fmtS &lt; 10">
+              <then>
+                <assign variable="strS" expression="&quot;0&quot; &amp; ToString(fmtS)"/>
+              </then>
+              <else>
+                <assign variable="strS" expression="ToString(fmtS)"/>
+              </else>
+            </if>
+            <assign variable="formattedTime" expression="strH &amp; &quot;:&quot; &amp; strM &amp; &quot;:&quot; &amp; strS"/>
+            <output expression="ToString(distance) &amp; &quot; km  &quot; &amp; formattedTime" newline="True"/>
+          </then>
+          <else/>
+        </if>
+      </for>
+      <if expression="time1 &gt; time2">
+        <then>
+          <assign variable="temp" expression="time1"/>
+          <assign variable="time1" expression="time2"/>
+          <assign variable="time2" expression="temp"/>
+          <assign variable="tempRank" expression="rank1"/>
+          <assign variable="rank1" expression="rank2"/>
+          <assign variable="rank2" expression="tempRank"/>
+        </then>
+        <else/>
+      </if>
+      <if expression="time2 &gt; time3">
+        <then>
+          <assign variable="temp" expression="time2"/>
+          <assign variable="time2" expression="time3"/>
+          <assign variable="time3" expression="temp"/>
+          <assign variable="tempRank" expression="rank2"/>
+          <assign variable="rank2" expression="rank3"/>
+          <assign variable="rank3" expression="tempRank"/>
+        </then>
+        <else/>
+      </if>
+      <if expression="time1 &gt; time2">
+        <then>
+          <assign variable="temp" expression="time1"/>
+          <assign variable="time1" expression="time2"/>
+          <assign variable="time2" expression="temp"/>
+          <assign variable="tempRank" expression="rank1"/>
+          <assign variable="rank1" expression="rank2"/>
+          <assign variable="rank2" expression="tempRank"/>
+        </then>
+        <else/>
+      </if>
+      <output expression="&quot;FINAL RANKING&quot;" newline="True"/>
+      <assign variable="fmtH" expression="Int(time1 / 3600)"/>
+      <assign variable="fmtM" expression="Int((time1 % 3600) / 60)"/>
+      <assign variable="fmtS" expression="time1 % 60"/>
+      <if expression="fmtH &lt; 10">
+        <then>
+          <assign variable="strH" expression="&quot;0&quot; &amp; ToString(fmtH)"/>
+        </then>
+        <else>
+          <assign variable="strH" expression="ToString(fmtH)"/>
+        </else>
+      </if>
+      <if expression="fmtM &lt; 10">
+        <then>
+          <assign variable="strM" expression="&quot;0&quot; &amp; ToString(fmtM)"/>
+        </then>
+        <else>
+          <assign variable="strM" expression="ToString(fmtM)"/>
+        </else>
+      </if>
+      <if expression="fmtS &lt; 10">
+        <then>
+          <assign variable="strS" expression="&quot;0&quot; &amp; ToString(fmtS)"/>
+        </then>
+        <else>
+          <assign variable="strS" expression="ToString(fmtS)"/>
+        </else>
+      </if>
+      <assign variable="formattedTime" expression="strH &amp; &quot;:&quot; &amp; strM &amp; &quot;:&quot; &amp; strS"/>
+      <output expression="&quot;1. Runner &quot; &amp; ToString(rank1) &amp; &quot; - &quot; &amp; formattedTime" newline="True"/>
+      <assign variable="fmtH" expression="Int(time2 / 3600)"/>
+      <assign variable="fmtM" expression="Int((time2 % 3600) / 60)"/>
+      <assign variable="fmtS" expression="time2 % 60"/>
+      <if expression="fmtH &lt; 10">
+        <then>
+          <assign variable="strH" expression="&quot;0&quot; &amp; ToString(fmtH)"/>
+        </then>
+        <else>
+          <assign variable="strH" expression="ToString(fmtH)"/>
+        </else>
+      </if>
+      <if expression="fmtM &lt; 10">
+        <then>
+          <assign variable="strM" expression="&quot;0&quot; &amp; ToString(fmtM)"/>
+        </then>
+        <else>
+          <assign variable="strM" expression="ToString(fmtM)"/>
+        </else>
+      </if>
+      <if expression="fmtS &lt; 10">
+        <then>
+          <assign variable="strS" expression="&quot;0&quot; &amp; ToString(fmtS)"/>
+        </then>
+        <else>
+          <assign variable="strS" expression="ToString(fmtS)"/>
+        </else>
+      </if>
+      <assign variable="formattedTime" expression="strH &amp; &quot;:&quot; &amp; strM &amp; &quot;:&quot; &amp; strS"/>
+      <output expression="&quot;2. Runner &quot; &amp; ToString(rank2) &amp; &quot; - &quot; &amp; formattedTime" newline="True"/>
+      <assign variable="fmtH" expression="Int(time3 / 3600)"/>
+      <assign variable="fmtM" expression="Int((time3 % 3600) / 60)"/>
+      <assign variable="fmtS" expression="time3 % 60"/>
+      <if expression="fmtH &lt; 10">
+        <then>
+          <assign variable="strH" expression="&quot;0&quot; &amp; ToString(fmtH)"/>
+        </then>
+        <else>
+          <assign variable="strH" expression="ToString(fmtH)"/>
+        </else>
+      </if>
+      <if expression="fmtM &lt; 10">
+        <then>
+          <assign variable="strM" expression="&quot;0&quot; &amp; ToString(fmtM)"/>
+        </then>
+        <else>
+          <assign variable="strM" expression="ToString(fmtM)"/>
+        </else>
+      </if>
+      <if expression="fmtS &lt; 10">
+        <then>
+          <assign variable="strS" expression="&quot;0&quot; &amp; ToString(fmtS)"/>
+        </then>
+        <else>
+          <assign variable="strS" expression="ToString(fmtS)"/>
+        </else>
+      </if>
+      <assign variable="formattedTime" expression="strH &amp; &quot;:&quot; &amp; strM &amp; &quot;:&quot; &amp; strS"/>
+      <output expression="&quot;3. Runner &quot; &amp; ToString(rank3) &amp; &quot; - &quot; &amp; formattedTime" newline="True"/>
+      <output expression="&quot;Winner: Runner &quot; &amp; ToString(rank1)" newline="True"/>
+    </body>
+  </function>
+</flowgorithm>
