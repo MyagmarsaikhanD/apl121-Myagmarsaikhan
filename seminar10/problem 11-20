@@ -1,0 +1,111 @@
+//problem 11 
+int sum_to(int n) {
+    int sum = 0;
+    for (int i = 1; i <= n; i++) {
+        sum += i;
+    }
+    return sum;
+}
+
+
+//problem 12
+long long factorial(int n) {
+    long long result = 1;
+    for (int i = 1; i <= n; i++) {
+        result *= i;
+    }
+    return result;
+}
+
+
+//problem 13 
+int is_prime(int n) {
+    if (n < 2)
+        return 0;
+    for (int i = 2; i <= n / i; i++) {
+        if (n % i == 0)
+            return 0;
+    }
+    return 1;
+}
+
+//problem 14 
+int count_digits(int n) {
+    int count = 0;
+    do {
+        count++;
+        n /= 10;
+    } while (n != 0);
+    return count;
+}
+
+//problem 15 
+int digit_sum(int n) {
+    int sum = 0;
+    while (n > 0) {
+        sum += n % 10;
+        n /= 10;
+    }
+    return sum;
+}
+
+
+//problem 16 
+int reverse_number(int n) {
+    int reverse = 0;
+    while (n > 0) {
+        reverse = reverse * 10 + n % 10;
+        n /= 10;
+    }
+    return reverse;
+}
+
+
+//problem 17 
+int is_palindrome(int n) {
+    int original = n;
+    int reverse = 0;
+    while (n > 0) {
+        reverse = reverse * 10 + n % 10;
+        n /= 10;
+    }
+    if (original == reverse)
+        return 1;
+    else
+        return 0;
+}
+
+//problem 18
+int gcd(int a, int b) {
+    while (b != 0) {
+        int temp = b;
+        b = a % b;
+        a = temp;
+    }
+    return a;
+}
+
+
+//problem 19 
+int gcd(int a, int b) {
+    while (b != 0) {
+        int temp = b;
+        b = a % b;
+        a = temp;
+    }
+    return a;
+}
+long long lcm(int a, int b) {
+    return (long long)(a / gcd(a, b)) * b;
+}
+
+//problem 20 
+long long power(int base, int exp) {
+    long long result = 1;
+
+    for (int i = 0; i < exp; i++) {
+        result *= base;
+    }
+
+    return result;
+}
