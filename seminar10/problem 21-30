@@ -1,0 +1,123 @@
+//problem 21 
+int is_leap(int y) {
+    if (y % 400 == 0)
+        return 1;
+    else if (y % 100 == 0)
+        return 0;
+    else if (y % 4 == 0)
+        return 1;
+    else
+        return 0;
+}
+
+//problem 22
+int is_leap(int y) {
+    if (y % 400 == 0)
+        return 1;
+    else if (y % 100 == 0)
+        return 0;
+    else if (y % 4 == 0)
+        return 1;
+    else
+        return 0;
+}
+int days_in_month(int m, int y) {
+    if (m == 2) {
+        if (is_leap(y))
+            return 29;
+        else
+            return 28;
+    }
+    if (m == 4 || m == 6 || m == 9 || m == 11)
+        return 30;
+
+    return 31;
+}
+
+//problem 23
+int count_divisors(int n) {
+    int count = 0;
+
+    for (int i = 1; i <= n; i++) {
+        if (n % i == 0)
+            count++;
+    }
+
+    return count;
+}
+
+//problem 24
+int is_perfect(int n) {
+    int sum = 0;
+
+    for (int i = 1; i < n; i++) {
+        if (n % i == 0)
+            sum += i;
+    }
+
+    if (sum == n)
+        return 1;
+    else
+        return 0;
+}
+
+//problem 25 
+int array_sum(int a[], int n) {
+    int sum = 0;
+
+    for (int i = 0; i < n; i++) {
+        sum += a[i];
+    }
+
+    return sum;
+}
+
+// problem 26
+int array_max(int a[], int n) {
+    int max = a[0];
+
+    for (int i = 1; i < n; i++) {
+        if (a[i] > max)
+            max = a[i];
+    }
+
+    return max;
+}
+
+//problem 27 
+double array_avg(int a[], int n) {
+    double sum = 0;
+
+    for (int i = 0; i < n; i++) {
+        sum += a[i];
+    }
+
+    return sum / n;
+}
+
+//problem 28 
+int index_of(int a[], int n, int key) {
+    for (int i = 0; i < n; i++) {
+        if (a[i] == key)
+            return i;
+    }
+    return -1;
+}
+
+//problem 29 
+void print_array(int a[], int n) {
+    for (int i = 0; i < n; i++) {
+        if (i > 0)
+            printf(" ");
+        printf("%d", a[i]);
+    }
+    printf("\n");
+}
+
+
+//problem 30 
+void fill_squares(int a[], int n) {
+    for (int i = 0; i < n; i++) {
+        a[i] = i * i;
+    }
+}
