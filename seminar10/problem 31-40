@@ -1,0 +1,208 @@
+//problem 31 
+int is_prime(int n) {
+    if (n < 2)
+        return 0;
+    for (int i = 2; i <= n / i; i++) {
+        if (n % i == 0)
+            return 0;
+    }
+    return 1;
+}
+int next_prime(int n) {
+    int num = n + 1;
+
+    while (!is_prime(num)) {
+        num++;
+    }
+    return num;
+}
+
+//problem 32
+int is_prime(int n) {
+    if (n < 2)
+        return 0;
+    for (int i = 2; i <= n / i; i++) {
+        if (n % i == 0)
+            return 0;
+    }
+    return 1;
+}
+int count_primes(int a, int b) {
+    int count = 0;
+    for (int i = a; i <= b; i++) {
+        if (is_prime(i))
+            count++;
+    }
+    return count;
+}
+
+//problem 33
+int binary_to_decimal(long long b) {
+    int decimal = 0;
+    int base = 1;
+    while (b > 0) {
+        decimal += (b % 10) * base;
+        b /= 10;
+        base *= 2;
+    }
+    return decimal;
+}
+
+//problem 34
+long long decimal_to_binary(int n) {
+    long long binary = 0;
+    long long place = 1;
+    while (n > 0) {
+        binary += (n % 2) * place;
+        n /= 2;
+        place *= 10;
+    }
+    return binary;
+}
+
+//problem 35 
+void print_triangle(int n) {
+    for (int i = 1; i <= n; i++) {
+        for (int j = 1; j <= i; j++) {
+            printf("*");
+        }
+        printf("\n");
+    }
+}
+//problem 36 
+long long fib(int n) {
+    long long a = 0, b = 1, c;
+    for (int i = 0; i < n; i++) {
+        c = a + b;
+        a = b;
+        b = c;
+    }
+    return a;
+}
+
+
+//problem 37 
+int is_armstrong(int n) {
+    int temp = n, digits = 0, sum = 0;
+    do {
+        digits++;
+        temp /= 10;
+    } while (temp > 0);
+    temp = n;
+    do {
+        int digit = temp % 10;
+        int power = 1;
+        for (int i = 0; i < digits; i++) {
+            power *= digit;
+        }
+        sum += power;
+        temp /= 10;
+    } while (temp > 0);
+    return sum == n;
+}
+
+
+//problem 38
+void reverse_array(int a[], int n) {
+    for (int i = 0; i < n / 2; i++) {
+        int temp = a[i];
+        a[i] = a[n - 1 - i];
+        a[n - 1 - i] = temp;
+    }
+}
+
+//problem 39 
+#include <stdio.h>
+
+int add(int a, int b);
+int sub(int a, int b);
+int mul(int a, int b);
+int divide(int a, int b);
+
+int main() {
+    int k, a, b;
+    char op;
+
+    scanf("%d", &k);
+
+    for (int i = 0; i < k; i++) {
+        scanf("%d %c %d", &a, &op, &b);
+
+        if (op == '+')
+            printf("%d\n", add(a, b));
+        else if (op == '-')
+            printf("%d\n", sub(a, b));
+        else if (op == '*')
+            printf("%d\n", mul(a, b));
+        else if (op == '/') {
+            if (b == 0)
+                printf("ERROR\n");
+            else
+                printf("%d\n", divide(a, b));
+        }
+    }
+
+    return 0;
+}
+
+int add(int a, int b) {
+    return a + b;
+}
+
+int sub(int a, int b) {
+    return a - b;
+}
+
+int mul(int a, int b) {
+    return a * b;
+}
+
+int divide(int a, int b) {
+    return a / b;
+}
+
+//problem 40 
+#include <stdio.h>
+
+int min_of(int a[], int n);
+int max_of(int a[], int n);
+double mean_of(int a[], int n);
+
+int main() {
+    int n, a[100];
+    scanf("%d", &n);
+
+    for (int i = 0; i < n; i++) {
+        scanf("%d", &a[i]);
+    }
+
+    printf("%d %d %.2f\n", min_of(a, n), max_of(a, n), mean_of(a, n));
+
+    return 0;
+}
+
+int min_of(int a[], int n) {
+    int min = a[0];
+    for (int i = 1; i < n; i++) {
+        if (a[i] < min)
+            min = a[i];
+    }
+    return min;
+}
+
+int max_of(int a[], int n) {
+    int max = a[0];
+    for (int i = 1; i < n; i++) {
+        if (a[i] > max)
+            max = a[i];
+    }
+    return max;
+}
+
+double mean_of(int a[], int n) {
+    double sum = 0;
+    for (int i = 0; i < n; i++) {
+        sum += a[i];
+    }
+    return sum / n;
+}
