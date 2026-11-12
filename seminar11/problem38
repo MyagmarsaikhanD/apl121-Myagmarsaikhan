@@ -1,0 +1,22 @@
+#include <stdio.h>
+
+int has_divisor(int n, int d) {
+    if (d > n / d) return 0;
+    if (n % d == 0) return 1;
+
+    return has_divisor(n, d + 1);
+}
+
+int is_prime(int n) {
+    if (n < 2) return 0;
+
+    return !has_divisor(n, 2);
+}
+
+int main(void) {
+    int n;
+    if (scanf("%d", &n) != 1) return 1;
+
+    printf("%d\n", is_prime(n));
+    return 0;
+}
